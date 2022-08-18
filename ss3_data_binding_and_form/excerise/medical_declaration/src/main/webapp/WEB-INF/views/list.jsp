@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+<%--    <link rel="stylesheet" href="css/bootstrap.min.css">--%>
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 </head>
 <body>
@@ -54,5 +55,6 @@
     </tbody>
 </table>
 </body>
-<script src="js/bootstrap.min.js"></script>
+<script src="javascript/bootstrap.min.js"></script>
+<%--<script src="js/bootstrap.min.js"></script>--%>
 </html>

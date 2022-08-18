@@ -28,7 +28,7 @@ public class DeclarationController {
         model.addAttribute("monthEnd", iDeclarationService.findAllMonthEnd());
         model.addAttribute("yearsEnd", iDeclarationService.findAllYearsEnd());
         model.addAttribute("declaration", new Declaration());
-        return "declaration";
+        return "create";
     }
 
     @GetMapping("/list")

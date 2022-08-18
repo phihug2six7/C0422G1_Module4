@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css">
+</head>
+<body>
+<h2>Danh Sách Sản Phẩm</h2>
+<a href="/full/showCreate">Thêm mới sản phẩm</a>
+<form action="/full/search">
+    <input type="text" name="name">
+    <button type="submit">Search</button>
+</form>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">STT</th>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Describe</th>
+        <th scope="col">Producer</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+        <th scope="col">Detail</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="productObj, loop :${productList}">
+        <td th:text="${loop.count}"></td>
+        <td th:text="${productObj.id}"></td>
+        <td th:text="${productObj.name}"></td>
+        <td th:text="${productObj.price}"></td>
+        <td th:text="${productObj.describe}"></td>
+        <td th:text="${productObj.producer}"></td>
+        <td>
+            <a th:href="@{/full/showUpdate(id=${productObj.id})}">
+                Edit
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/full/delete(id=${productObj.id})}">
+                Delete
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/full/showView(id=${productObj.id})}">
+                Detail
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+<script src="../../../resources/js/bootstrap.min.js"></script>
+</html>
