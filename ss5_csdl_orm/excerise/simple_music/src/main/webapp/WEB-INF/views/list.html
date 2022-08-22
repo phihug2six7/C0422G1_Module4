@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css">
+</head>
+<body>
+<h2>Danh sách</h2>
+<p>
+    <a href="/form">Add</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Name</th>
+        <th scope="col">Singer</th>
+        <th scope="col">Type</th>
+        <th scope="col">Link</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="music, loop: ${musicList}">
+        <td th:text="${loop.count}"></td>
+        <td th:text="${music.name}"></td>
+        <td th:text="${music.singer}"></td>
+        <td th:text="${music.type}"></td>
+        <td>
+            <audio controls>
+                <source th:src="@{'/music/' + ${music.path}}">
+            </audio>
+        </td>
+        <td>
+            <a th:href="@{/update(id=${music.id})}">Update</a>
+        </td>
+        <td>
+            <a th:href="@{/delete(id=${music.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p th:text="${mess}"></p>
+</body>
+<script src="../../../resources/js/bootstrap.min.js"></script>
+</html>
