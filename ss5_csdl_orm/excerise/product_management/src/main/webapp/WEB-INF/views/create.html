@@ -8,7 +8,7 @@
 <h2>Thêm mới sản phẩm</h2>
 <form action="/full/create" method="post" th:object="${product}">
     <div>
-        <input type="number" th:field="*{id}">
+        <input type="hidden" th:field="*{id}">
     </div>
     <div>
         <label>Name</label>

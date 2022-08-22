@@ -16,8 +16,8 @@ public class ProductController {
     private IProductService iProductService;
 
     @GetMapping("/list")
-    public String showList(Model model) {
-        List<Product> productList = iProductService.findAll();
+    public String showList(Model model, String nameSearch) {
+        List<Product> productList = iProductService.findAll(nameSearch);
         model.addAttribute("productList", productList);
         return "list";
     }
@@ -42,8 +42,8 @@ public class ProductController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute Product product, @RequestParam int id) {
-        iProductService.update(product, id);
+    public String update(@ModelAttribute Product product) {
+        iProductService.update(product);
         return "redirect:/full/list";
     }
 
@@ -57,11 +57,5 @@ public class ProductController {
     public String view(@RequestParam int id, Model model) {
         model.addAttribute("product", iProductService.findById(id));
         return "/detail";
-    }
-
-    @GetMapping("/search")
-    public String search(@RequestParam String name, Model model) {
-        model.addAttribute("productList", iProductService.findByName(name));
-        return "list";
     }
 }
