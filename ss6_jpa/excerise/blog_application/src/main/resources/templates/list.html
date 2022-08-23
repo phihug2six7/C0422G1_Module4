@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+</head>
+<body>
+<h2>Blog Hôm Nay</h2>
+<!--<h4 th:text="#{message}"></h4>-->
+<a href="/showCreate">Thêm mới blog</a>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Content</th>
+        <th scope="col">Update</th>
+        <th scope="col">Detail</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="blog,loop :${fullList}">
+        <td th:text="${loop.count}"></td>
+        <td th:text="${blog.name}"></td>
+        <td th:text="${blog.content}"></td>
+        <td>
+            <a th:href="@{/showUpdate(id=${blog.id})}">Update</a>
+        </td>
+        <td>
+            <a th:href="@{/detail(id=${blog.id})}">Detail</a>
+        </td>
+        <td>
+            <a th:href="@{/delete(id=${blog.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+<script src="../static/js/bootstrap.min.js"></script>
+</html>
