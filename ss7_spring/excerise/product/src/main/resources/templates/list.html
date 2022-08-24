@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css">
+</head>
+<body>
+<h2>Danh Sách Sản Phẩm</h2>
+<a href="/showCreate">Thêm mới sản phẩm</a>
+
+<div>
+    <a href="/">Quay về trang chủ</a>
+</div>
+<form action="/">
+        <input
+                type="text"
+                class="form-control"
+                aria-describedby="button-addon2"
+                name="keyword"
+        />
+        <button class="btn btn-outline-primary" type="submit" id="button-addon2" data-mdb-ripple-color="dark">
+            Search
+        </button>
+</form>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Describe</th>
+        <th scope="col">Producer</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+        <th scope="col">Detail</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="productObj, loop :${productList}">
+        <td th:text="${loop.count}"></td>
+        <td th:text="${productObj.name}"></td>
+        <td th:text="${productObj.price}"></td>
+        <td th:text="${productObj.describe}"></td>
+        <td th:text="${productObj.producer}"></td>
+        <td>
+            <a th:href="@{/showUpdate(id=${productObj.id})}">
+                Edit
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/delete(id=${productObj.id})}">
+                Delete
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/showView(id=${productObj.id})}">
+                Detail
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <a th:href="@{/(page=${productList.number - 1},
+    keyword=${keywordVal})}"
+       th:if="${productList.hasPrevious()}">
+        Previous
+    </a>
+    <span th:text="${productList.number+1}"></span>
+    /
+    <span th:text="${productList.totalPages}"></span>
+    <a th:href="@{/(page=${productList.number + 1},
+    keyword=${keywordVal})}"
+       th:if="${productList.hasNext()}">
+        Next
+    </a>
+</div>
+</body>
+<script src="../../../resources/js/bootstrap.min.js"></script>
+</html>
