@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+</head>
+<body>
+<div>
+    <a href="/showCreate">Thêm mới</a>
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">STT</th>
+        <th scope="col">NameSong</th>
+        <th scope="col">Singer</th>
+        <th scope="col">Type</th>
+        <th scope="col">Edit</th></tr>
+    </thead>
+    <tbody>
+    <tr th:each="musicObj, loop :${musicList}">
+        <td th:text="${loop.count}"></td>
+        <td th:text="${musicObj.nameSong}"></td>
+        <td th:text="${musicObj.singer}"></td>
+        <td th:text="${musicObj.type}"></td>
+        <td>
+            <a th:href="@{/showUpdate(id=${musicObj.id})}">
+                Edit
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+<script src="../static/js/bootstrap.min.js"></script>
+</html>

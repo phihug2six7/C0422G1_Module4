@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/create" method="post" th:object="${userDto}">
+    <div>
+        <input type="hidden" th:field="*{id}">
+        <span th:errors="*{id}"></span>
+    </div>
+    <div>
+        <label>FirstName</label>
+        <input type="text" th:field="*{firstName}">
+        <span th:errors="*{firstName}"></span>
+    </div>
+    <div>
+        <label>Last Name</label>
+        <input type="text" th:field="*{lastName}">
+        <span th:errors="*{lastName}"></span>
+    </div>
+    <div>
+        <label>PhoneNumber</label>
+        <input type="number" th:field="*{phoneNumber}">
+        <span th:errors="*{phoneNumber}"></span>
+    </div>
+    <div>
+        <label>Age</label>
+        <input type="date" th:field="*{age}">
+        <span th:errors="*{age}"></span>
+    </div>
+    <div>
+        <label>Email</label>
+        <input type="email" th:field="*{email}">
+        <span th:errors="*{email}"></span>
+    </div>
+    <button type="submit">Create</button>
+</form>
+</body>
+</html>
