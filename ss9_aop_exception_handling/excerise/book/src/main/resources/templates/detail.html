@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Thông tin chi tiết</h2>
+<a href="/">Quay về trang chính</a>
+<div>
+<label>ID</label>
+<span th:text="${book.id}"></span>
+</div>
+<div>
+    <label>Name</label>
+    <span th:text="${book.name}"></span>
+</div>
+<div>
+    <label>Amount</label>
+    <span th:text="${book.amount}"></span>
+</div>
+<div>
+    <label>AmountTotal</label>
+    <span th:text="${book.amountTotal}"></span>
+</div>
+<div>
+    <a th:href="@{/rent(id=${book.id})}">Thuê</a>
+</div>
+
+</body>
+</html>
