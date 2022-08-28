@@ -8,7 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface IBlogRepository extends JpaRepository<Blog, Integer> {
     Page<Blog> findAllByNameContaining(String nameBlog, Pageable pageable);
 
-//    Page<Blog> findAllByNameContainingAndCategory_NameCategoryContaining(String nameBlog,String nameCategory,Pageable pageable);
-
-    Page<Blog> findAllByNameContainingAndCategory_CIdContaining(String name,Integer id,Pageable pageable );
+    Page<Blog> findAllByNameContainingAndCategory_cId(String name,Integer id,Pageable pageable );
 }

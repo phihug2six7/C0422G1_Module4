@@ -36,6 +36,10 @@ public class Blog {
         this.content = content;
     }
 
+    public Blog(Category category) {
+        this.category = category;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -58,5 +62,11 @@ public class Blog {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Blog(String name, String content, Category category) {
+        this.name = name;
+        this.content = content;
+        this.category = category;
     }
 }

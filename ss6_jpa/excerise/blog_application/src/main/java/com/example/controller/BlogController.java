@@ -31,7 +31,7 @@ public class BlogController {
     @PostMapping("/create")
     public String create(@ModelAttribute Blog blog, RedirectAttributes redirectAttributes) {
         iBlogService.create(blog);
-        redirectAttributes.addFlashAttribute("message", "Thêm mới thành công ");
+        redirectAttributes.addFlashAttribute("msg", "Thêm mới thành công ");
         return "redirect:/";
     }
 
@@ -43,14 +43,16 @@ public class BlogController {
     }
 
     @PostMapping("/update")
-    public String update(Blog blog) {
+    public String update(Blog blog,RedirectAttributes redirectAttributes) {
         iBlogService.create(blog);
+        redirectAttributes.addFlashAttribute("msg","Chỉnh sửa thành công");
         return "redirect:/";
     }
 
     @GetMapping("/delete")
-    public String delete(@RequestParam Integer id) {
+    public String delete(@RequestParam Integer id,RedirectAttributes redirectAttributes) {
         iBlogService.remove(id);
+        redirectAttributes.addFlashAttribute("msg","Xóa thành công");
         return "redirect:/";
     }
 

@@ -26,11 +26,14 @@ public class BlogController {
     @GetMapping("/")
     public String showList(Model model,
                            @PageableDefault(size = 2) Pageable pageable,
-                           @RequestParam Optional<String> keyword,@ModelAttribute("blog")Blog blog) {
+                           @RequestParam Optional<String> keyword,Blog blog) {
 
         String keywordVal = keyword.orElse("");
+        String keywordtest ="";
+
+
         if (blog.getCategory()!=null){
-            model.addAttribute("fullList",iBlogService.findAllContain(keywordVal,blog.getCategory().getcId(),pageable));
+            model.addAttribute("fullList",iBlogService.findAllByNameContainingAndCategory_CId(keywordtest,blog.getCategory().getcId(),pageable));
         }else {
             model.addAttribute("fullList",
                     iBlogService.findAllSearchAndPaging(keywordVal, pageable));
@@ -81,11 +84,4 @@ public class BlogController {
         model.addAttribute("blog", iBlogService.findById(id));
         return "detail";
     }
-
-//    @GetMapping("/search")
-//    public String search(@RequestParam Integer id,Model model){
-////        List<Category> category=iCategoryService.findById(id);
-//        model.addAttribute("category",iCategoryService.findById(id));
-//        return "/list";
-//    }
 }

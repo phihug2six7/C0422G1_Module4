@@ -9,10 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
-//@RequestMapping("full")
 @Controller
 public class ProductController {
     @Autowired
@@ -54,9 +52,9 @@ public class ProductController {
     }
 
     @GetMapping("/delete")
-    public String delete(@RequestParam int id) {
+    public String delete( int id) {
         iProductService.delete(id);
-        return "redirect:/list";
+        return "redirect:/";
     }
 
     @GetMapping("/showView")

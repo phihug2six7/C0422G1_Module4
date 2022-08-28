@@ -25,6 +25,10 @@ public class Category {
     public Category() {
     }
 
+    public Category(Integer cId) {
+        this.cId = cId;
+    }
+
     public Category(String nameCategory) {
         this.nameCategory = nameCategory;
     }

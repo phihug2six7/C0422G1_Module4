@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
+<a href="/customer/create">Create Customer</a>
 <table id="tableCustomer" class="table table-striped table-bordered" style="width: 100%">
     <thead>
     <tr>
@@ -23,16 +24,17 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>4</td>
-        <td>5</td>
-        <td>6</td>
-        <td>7</td>
-        <td>8</td>
-        <td>9</td>
+    <tr th:each="customer ,loop : ${customerList}">
+        <td th:text="${loop.count}"></td>
+        <td th:text="${customer.customerType.name}"></td>
+        <td th:text="${customer.name}"></td>
+        <td th:text="${customer.dateOfBirth}"></td>
+        <td th:if="${customer.gender==0}"><span>Nữ</span></td>
+        <td th:if="${customer.gender==1}"><span>Nam</span></td>
+        <td th:text="${customer.idCard}"></td>
+        <td th:text="${customer.phoneNumber}"></td>
+        <td th:text="${customer.email}"></td>
+        <td th:text="${customer.address}"></td>
         <td>
             <a class="btn bg-light" href="/updateCus">Update</a>
         </td>

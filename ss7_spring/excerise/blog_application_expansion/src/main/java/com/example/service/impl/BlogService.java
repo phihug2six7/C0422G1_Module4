@@ -37,8 +37,8 @@ public class BlogService implements IBlogService {
     }
 
     @Override
-    public Page<Blog> findAllContain(String name, Integer id, Pageable pageable) {
-        return iBlogRepository.findAllByNameContainingAndCategory_CIdContaining(name,id,pageable);
+    public Page<Blog> findAllByNameContainingAndCategory_CId(String name, Integer id, Pageable pageable) {
+        return iBlogRepository.findAllByNameContainingAndCategory_cId(name,id,pageable);
     }
 
 //    @Override

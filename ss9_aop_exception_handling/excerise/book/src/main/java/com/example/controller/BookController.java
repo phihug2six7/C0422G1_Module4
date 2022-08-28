@@ -28,10 +28,10 @@ public class BookController {
     @GetMapping("/rent")
     public String rent(@RequestParam Integer id, Model model) throws Exception {
         Book book = iBookService.findById(id);
-        if (book.getAmount() == 0) {
-            throw new Exception();
-        }
-        book.setAmount(book.getAmount() -1);
+//        if (book.getAmount() == 0) {
+//            throw new Exception();
+//        }
+//        book.setAmount(book.getAmount() -1);
         iBookService.update(book);
         model.addAttribute("book", iBookService.findById(id));
         return "detail";
@@ -46,15 +46,15 @@ public class BookController {
     @PostMapping("/payment")
     public String payment(@RequestParam int id,Model model) throws Exception {
         Book book= iBookService.findById(id);
-        if (book==null){
-            throw new Exception();
-        }
-        if (book.getAmount()>= book.getAmountTotal()){
-            model.addAttribute("msg","Đủ sách rồi");
-            return "pay";
-        }
-        book.setAmount(book.getAmount() +1);
-        iBookService.update(book);
+//        if (book==null){
+//            throw new Exception();
+//        }
+//        if (book.getAmount()>= book.getAmountTotal()){
+//            model.addAttribute("msg","Đủ sách rồi");
+//            return "pay";
+//        }
+//        book.setAmount(book.getAmount() +1);
+        iBookService.payment(book);
         return "pay";
     }
 

@@ -16,7 +16,7 @@ public interface IBlogService {
 
 //    Page<Blog> findAll(String nameBlog,String nameCategory,Pageable pageable);
 
-    Page<Blog> findAllContain(String name,Integer id,Pageable pageable);
+    Page<Blog> findAllByNameContainingAndCategory_CId(String name,Integer id,Pageable pageable);
 
 //    List<Blog> findAllSearchCategory(Integer id);
 }
