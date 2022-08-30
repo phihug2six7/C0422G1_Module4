@@ -3,24 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
-<h2>Thông tin chi tiết</h2>
-<a href="/">Quay lại </a>
-<div>
-    <label>Tên</label>
-  <span th:text="${product.name}"></span>
-</div>
-<div>
-    <label>Giá</label>
-    <span th:text="${product.price}"></span>
-</div>
-<div>
-    <label>Mô tả</label>
-    <span th:text="${product.description}"></span>
-</div>
-<div>
-    <a th:href="@{/addCart(id=${product.id})}">Thêm vào giỏ</a>
+<h2 class="d-flex justify-content-center">Thông tin chi tiết</h2>
+<h4 class="d-flex justify-content-center"><a href="/">Quay lại </a></h4>
+<table>
+    <div class="d-flex justify-content-center">
+        <div style="background-color: palegreen">
+            <label>Tên:</label>
+            <span th:text="${product.name}"></span>
+        </div>
+
+        <div style="background-color: plum">
+            <label>Giá:</label>
+            <span th:text="${product.price}"></span>
+        </div>
+
+        <div style="background-color: paleturquoise">
+            <label>Mô tả:</label>
+            <span th:text="${product.description}"></span>
+        </div>
+    </div>
+</table>
+<div class="d-flex justify-content-center">
+    <h4><a th:href="@{/addCart(id=${product.id})}"  style="color: deeppink">Thêm vào giỏ</a></h4>
 </div>
 </body>
 </html>

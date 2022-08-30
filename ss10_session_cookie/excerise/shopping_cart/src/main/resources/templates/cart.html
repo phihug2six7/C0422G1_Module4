@@ -7,6 +7,8 @@
 
 </head>
 <body>
+<a href="/">Quay về trang chính</a>
+<h2 class="d-flex justify-content-center">Thông tin giỏ hàng</h2>
 <table class="table">
     <thead>
     <tr>
@@ -17,13 +19,13 @@
     </thead>
     <tbody>
     <tr th:each="product:${cart.keySet()}">
-        <td th:text="${product.name}"></td>
-        <td th:text="${product.price}"></td>
-        <td th:text="${cart.get(product)}"></td>
+        <td th:text="${product.name}" class="table-secondary"></td>
+        <td th:text="${product.price}" class="table-success"></td>
+        <td th:text="${cart.get(product)}" class="table-danger"></td>
     </tr>
-    <tr>
-        <td>Tổng tiền:</td>
-        <td th:text="${total}"></td>
+    <tr class="table-dark">
+        <td >Tổng tiền:</td>
+        <td th:text="${total}" class="table-dark"></td>
     </tr>
     <tbody>
 </table>

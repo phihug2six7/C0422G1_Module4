@@ -3,25 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
-<h2>Danh sách sản phẩm</h2>
-<a href="/shopping-cart">Giỏ Hàng Của Bạn</a>
-<table border="1">
+<h2 class=" d-flex justify-content-center">Danh sách sản phẩm</h2>
+<a href="/shopping-cart" class="d-flex justify-content-center">Giỏ Hàng Của Bạn</a>
+
+<div class="d-flex justify-content-center" >
+<table border="1" style="background-color: papayawhip" class="table">
+    <thead>
     <tr>
         <th>Name</th>
         <th>Price</th>
         <th>Image</th>
         <th>Add To Cart</th>
     </tr>
+    </thead>
+    <tbody>
     <th:block th:each="product:${productList}">
-        <tr>
-            <td th:text="${product.name}"></td>
-            <td th:text="${product.price}"></td>
-            <td><img th:src="${product.imgLink}" alt=""></td>
-            <td><a th:href="@{/detail(id=${product.id})}" style="width: 50px;height: 50px">Detail</a></td>
+        <tr class="table-primary">
+            <td th:text="${product.name}" class="table-secondary"></td>
+            <td th:text="${product.price}" class="table-success"></td>
+            <td class="table-danger"><img th:src="${product.imgLink}" style="width: 50px;height: auto"></td>
+            <td><a th:href="@{/detail(id=${product.id})}" >Detail</a></td>
         </tr>
     </th:block>
+    <tbody>
 </table>
+</div>
 </body>
 </html>
