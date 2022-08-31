@@ -10,6 +10,7 @@
 <h4 class="d-flex justify-content-center"><a href="/">Quay lại </a></h4>
 <table>
     <div class="d-flex justify-content-center">
+
         <div style="background-color: palegreen">
             <label>Tên:</label>
             <span th:text="${product.name}"></span>
@@ -24,10 +25,11 @@
             <label>Mô tả:</label>
             <span th:text="${product.description}"></span>
         </div>
+
     </div>
 </table>
 <div class="d-flex justify-content-center">
-    <h4><a th:href="@{/addCart(id=${product.id})}"  style="color: deeppink">Thêm vào giỏ</a></h4>
+    <h4><a th:href="@{/addCart(id=${product.id})}" style="color: deeppink">Thêm vào giỏ</a></h4>
 </div>
 </body>
 </html>
