@@ -36,17 +36,17 @@
         <td th:text="${customer.email}"></td>
         <td th:text="${customer.address}"></td>
         <td>
-            <a class="btn bg-light" href="/updateCus">Update</a>
+            <a class="btn bg-light" th:href="@{/customer/update(id=${customer.id})}">Update</a>
         </td>
         <td>
-            <button type="button" class="btn btn-primary"
-                    data-bs-toggle="modal" data-bs-target="#deleteCustomer"
-                    onclick="deleteCustomerClick('${customer.customerID}','${customer.customerName}')">
-                Delete
-            </button>
+<!--            <button type="button" class="btn btn-primary"-->
+<!--                    data-bs-toggle="modal" data-bs-target="#deleteCustomer"-->
+<!--                    onclick="deleteCustomerClick('${customer.customerID}','${customer.customerName}')">-->
+<!--                Delete-->
+<!--            </button>-->
+            <a class="btn bg-light" th:href="@{/customer/delete(id=${customer.id})}">Delete</a>
         </td>
     </tr>
-    </c:forEach>
     </tbody>
 </table>
 

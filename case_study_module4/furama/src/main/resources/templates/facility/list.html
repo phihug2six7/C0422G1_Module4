@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Facility List</h1>
-<a href="/FacilityServlet?action=create">Create Facility</a>
+<a href="/facility/create">Create Facility</a>
 <table class="table">
     <thead>
     <tr>
@@ -28,40 +28,39 @@
     </tr>
     </thead>
     <tbody>
-    <:forEach var="facility" items="${facilityList}" varStatus="status">
-        <tr>
-            <th scope="row">${status.count}</th>
-            <td>${facility.name}</td>
-            <td>${facility.area}</td>
-            <td>${facility.cost}</td>
-            <td>${facility.maxPeople}</td>
-            <td>${facility.rentTypeId}</td>
-            <td>${facility.serviceCode}</td>
-            <td>${facility.standardRoom}</td>
-            <td>${facility.descriptionOtherConvenience}</td>
-            <td>${facility.poolArea}</td>
-            <td>${facility.numberOfFloors}</td>
-            <td>${facility.facilityFree}</td>
+        <tr th:each="facility ,loop : ${facilityList}">
+            <td th:text="${loop.count}"></th>
+            <td th:text="${facility.name}"></td>
+            <td th:text="${facility.area}"></td>
+            <td th:text="${facility.cost}"></td>
+            <td th:text="${facility.maxPeople}"></td>
+            <td th:text="${facility.rentType.name}"></td>
+            <td th:text="${facility.facilityType.name}"></td>
+            <td th:text="${facility.standardRoom}"></td>
+            <td th:text="${facility.descriptionOtherConvenience}"></td>
+            <td th:text="${facility.poolArea}"></td>
+            <td th:text="${facility.numberOfFloors}"></td>
+            <td th:text="${facility.facilityFree}"></td>
 
             <td>
-                <a class="btn bg-light" href="/FacilityServlet?action=edit&facilityId=${facility.idFacility}">Update</a>
+                <a class="btn bg-light" th:href="@{/facility/update(id=${facility.id})}">Update</a>
             </td>
             <td><!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary"
-                        data-bs-toggle="modal" data-bs-target="#deleteFacility"
-                        onclick="deleteFacilityOnClick('${facility.idFacility}','${facility.name}')">
-                    Delete
-                </button>
+<!--                <button type="button" class="btn btn-primary"-->
+<!--                        data-bs-toggle="modal" data-bs-target="#deleteFacility"-->
+<!--                        onclick="deleteFacilityOnClick('${facility.idFacility}','${facility.name}')">-->
+<!--                    Delete-->
+<!--                </button>-->
+                <a class="btn bg-light" th:href="@{/facility/delete(id=${facility.id})}">Delete</a>
             </td>
         </tr>
-
-    </:forEach>
     </tbody>
 </table>
+
 <!-- Modal -->
 <div class="modal fade" id="deleteFacility" tabindex="-1" aria-labelledby="deleteFacilityLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="/FacilityServlet?action=delete" method="post">
+        <form action="/facility/delete" method="get">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteFacilityLabel">Modal title</h5>

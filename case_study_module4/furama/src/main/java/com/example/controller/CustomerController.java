@@ -12,12 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CustomerController {
     @Autowired
     private ICustomerService iCustomerService;
-
     @Autowired
     private ICustomerTypeService iCustomerTypeService;
 
@@ -41,6 +41,22 @@ public class CustomerController {
         customerType.setId(customer.getCustomerType().getId());
         customer.setCustomerType(customerType);
         iCustomerService.save(customer);
+        return "redirect:/customer/list";
+    }
+    @GetMapping("/customer/update")
+    public String showUpdate(@RequestParam int id,Model model){
+        model.addAttribute("customerList",iCustomerService.findById(id));
+        model.addAttribute("customerTypeList",iCustomerTypeService.findAll());
+        return "customer/update";
+    }
+    @PostMapping("/customer/update")
+    public String update(@ModelAttribute Customer customer){
+        iCustomerService.save(customer);
+        return "redirect:/customer/list";
+    }
+    @GetMapping("/customer/delete")
+    public String delete(@RequestParam Integer id){
+        iCustomerService.remove(id);
         return "redirect:/customer/list";
     }
 }
