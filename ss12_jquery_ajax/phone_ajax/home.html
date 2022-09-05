@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+<div>
+
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Model</th>
+                <th scope="col">Price</th>
+                <th scope="col">Producer</th>
+                <th scope="col">Update</th>
+                <th scope="col">Detail</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody id="bodyPhone">
+
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="..." class="d-flex justify-content-center">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" id="aPrevious">Previous</a>
+            </li>
+            <li class="page-item disabled" >
+                <a class="page-link" id="pageNumber">1/2</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#" id="aNext">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script>
+    let curPage=0;
+    function listPhone(pageNumber) {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/phone/list" + pageNumber,
+            success: function(phonePage){
+                let phoneList = phonePage.content;
+                console.log(phoneList);
+                let htmlStr = '';
+                for (let i = 0; i < phoneList.length; i++) {
+                    // htmlStr +=
+                    //     "<tr>" + "<td>" + studentList[i].id + "</td>" + "</tr>";
+                    htmlStr += `<tr>
+                        <td>${i + 1}</td>
+                        <td>${phoneList[i].id}</td>
+                        <td>${phoneList[i].producer}</td>
+                        <td>${phoneList[i].model}</td>
+                        <td>${phoneList.price}</td>
+                        <td>
+                            <a href="#">Update</a>
+                        </td> <td>
+                            <a href="#">Detail</a>
+                        </td> <td>
+                            <a href="#">Delete</a>
+                        </td>
+                    </tr>`;
+                }
+
+                $("#bodyPhone").html(htmlStr);
+                console.log(htmlStr);
+            },
+            error: function(resultError) {
+
+            }
+        });
+    }
+
+
+    // $("#aPrevious").click(function() {
+    //     listPhone(--curPage);
+    // });
+    //
+    // $("#aNext").click(function() {
+    //     listPhone(++curPage);
+    // });
+
+    // Call first
+    listPhone(curPage);
+</script>
+</body>
+</html>

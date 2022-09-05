@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Chỉnh sửa blog</h2>
+<a href="/">Quay trở lại trang chủ</a>
+<form action="/update" method="post" th:object="${blog_update}">
+    <div>
+        <label>Id</label>
+        <input type="text" readonly th:field="*{id}">
+    </div>
+    <div>
+        <label>Name</label>
+        <input type="text" th:field="*{name}">
+    </div>
+    <div>
+        <label>Content</label>
+        <input type="text" th:field="*{content}">
+    </div>
+    <div>
+        <label>BlogCateGory<b style="color: red">*(Enter numbers from 1 to 3)</b> </label>
+        <input type="number" th:field="*{category.cId}" >
+    </div>
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>
