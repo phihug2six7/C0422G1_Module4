@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+
 </head>
 <body>
+<h2>Quản lý điện thoại</h2>
 <div>
 
     <div>
@@ -13,9 +15,9 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Producer</th>
                 <th scope="col">Model</th>
                 <th scope="col">Price</th>
-                <th scope="col">Producer</th>
                 <th scope="col">Update</th>
                 <th scope="col">Detail</th>
                 <th scope="col">Delete</th>
@@ -26,30 +28,150 @@
             </tbody>
         </table>
     </div>
-    <nav aria-label="..." class="d-flex justify-content-center">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" id="aPrevious">Previous</a>
-            </li>
-            <li class="page-item disabled" >
-                <a class="page-link" id="pageNumber">1/2</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#" id="aNext">Next</a>
-            </li>
-        </ul>
-    </nav>
+
+    <div>
+
+        <form>
+            <div>
+
+                <div>
+                    <label>Producer</label>
+                    <input type="text" id="producer">
+                </div>
+
+                <div>
+                    <label>Model</label>
+                    <input type="text" id="model">
+                </div>
+
+                <div>
+                    <label>Price</label>
+                    <input type="text" id="price">
+                </div>
+
+                <div>
+                    <input type="submit" value="Thêm mới" onclick="addPhone()">
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div>
+
+        <form>
+            <div>
+                <div>
+                    <input type="hidden" id="upId">
+                </div>
+                <div>
+                    <label>Producer</label>
+                    <input type="text" id="updatePro">
+                </div>
+
+                <div>
+                    <label>Model</label>
+                    <input type="text" id="updateMo">
+                </div>
+
+                <div>
+                    <label>Price</label>
+                    <input type="text" id="updatePri">
+                </div>
+
+                <div>
+                    <input type="submit" value="Chỉnh sửa" id="updatePhone">
+                </div>
+            </div>
+        </form>
+
+    </div>
 </div>
 
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery-3.6.0.min.js"></script>
 <script>
-    let curPage=0;
+    let curPage = 0;
+
+    function addPhone() {
+        let producer = $("#producer").val();
+        console.log(producer)
+        let model = $("#model").val();
+        console.log(model)
+        let price = $("#price").val();
+        console.log(price)
+        let phone = {
+            producer: producer,
+            model: model,
+            price: price
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            data: JSON.stringify(phone),
+            url: "http://localhost:8080/phone/create",
+            success: function (resultSuccess) {
+                alert("success");
+            },
+            error: function (error) {
+                alert("fail");
+            }
+        })
+    }
+
+    $("#updatePhone").click(function () {
+        let id = $("#upId").val();
+        let producer = $("#updatePro").val();
+        let model = $("#updateMo").val();
+        let price = $("#updatePri").val();
+        let phone = {
+            id: id,
+            producer: producer,
+            model: model,
+            price: price
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            data: JSON.stringify(phone),
+            url: "http://localhost:8080/phone/create",
+            success: function (resultSuccess) {
+                alert("success");
+            },
+            error: function (error) {
+                alert("fail");
+            }
+        })
+    })
+
+    function updatePhone(idPhone) {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/phone/updateForm/" + idPhone,
+            success: function (resultSuccess) {
+                $("#upId").val(resultSuccess.id);
+                $("#updatePro").val(resultSuccess.producer);
+                $("#updateMo").val(resultSuccess.model);
+                $("#updatePri").val(resultSuccess.price);
+            },
+            error: function (error) {
+                alert("fail");
+            }
+        });
+    }
+
+
     function listPhone(pageNumber) {
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/phone/list" + pageNumber,
-            success: function(phonePage){
+            url: "http://localhost:8080/phone/list?page=" + pageNumber,
+            success: function (phonePage) {
                 let phoneList = phonePage.content;
                 console.log(phoneList);
                 let htmlStr = '';
@@ -58,16 +180,16 @@
                     //     "<tr>" + "<td>" + studentList[i].id + "</td>" + "</tr>";
                     htmlStr += `<tr>
                         <td>${i + 1}</td>
-                        <td>${phoneList[i].id}</td>
+
                         <td>${phoneList[i].producer}</td>
                         <td>${phoneList[i].model}</td>
-                        <td>${phoneList.price}</td>
+                        <td>${phoneList[i].price}</td>
                         <td>
-                            <a href="#">Update</a>
+                           <button type="button" onclick="updatePhone(${phoneList[i].id})">Update</button>
                         </td> <td>
                             <a href="#">Detail</a>
                         </td> <td>
-                            <a href="#">Delete</a>
+                            <button type="button" onclick="deletePhone(${phoneList[i].id})">Delete</button>
                         </td>
                     </tr>`;
                 }
@@ -75,22 +197,28 @@
                 $("#bodyPhone").html(htmlStr);
                 console.log(htmlStr);
             },
-            error: function(resultError) {
+            error: function (resultError) {
 
             }
         });
     }
 
+    function deletePhone(phoneId) {
+        $.ajax({
+            type: "DELETE",
+            url: `http://localhost:8080/phone/delete?id=` + phoneId,
+            success: function (resultSuccess) {
+                listPhone(curPage);
+            },
+            error: function (resultError) {
+            }
+        });
+    }
 
-    // $("#aPrevious").click(function() {
-    //     listPhone(--curPage);
-    // });
-    //
-    // $("#aNext").click(function() {
-    //     listPhone(++curPage);
-    // });
+    $(document).ready(function () {
+        listPhone(curPage);
+    });
 
-    // Call first
     listPhone(curPage);
 </script>
 </body>

@@ -26,7 +26,14 @@ public class PhoneController {
         return new ResponseEntity<>(phonePage, HttpStatus.OK);
     }
 
-    @GetMapping("delete")
+    @PostMapping("/create")
+    public ResponseEntity<Void> createPhone(@RequestBody Phone phone){
+        iPhoneService.save(phone);
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
+
+    @DeleteMapping("/delete")
     public ResponseEntity<Void> delete(@RequestParam Integer id){
         Phone phone = this.iPhoneService.findById(id);
         if (phone == null){
@@ -34,5 +41,10 @@ public class PhoneController {
         }
         this.iPhoneService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/updateForm/{id}")
+    public ResponseEntity<Phone> updateForm(@PathVariable int id){
+        return new ResponseEntity<>(this.iPhoneService.findById(id), HttpStatus.OK);
     }
 }
