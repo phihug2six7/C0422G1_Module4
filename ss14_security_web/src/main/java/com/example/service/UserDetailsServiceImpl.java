@@ -1,8 +1,9 @@
 package com.example.service;
 
-import codegym.danang.demo.dao.AppRoleDAO;
-import codegym.danang.demo.dao.AppUserDAO;
 import com.example.entity.AppUser;
+import com.example.entity.UserRole;
+import com.example.repository.AppUserRepository;
+import com.example.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,14 +20,14 @@ import java.util.List;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private AppUserDAO appUserDAO;
+    private AppUserRepository appUserRepository;
 
     @Autowired
-    private AppRoleDAO appRoleDAO;
+    private UserRoleRepository userRoleRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        AppUser appUser = this.appUserDAO.findUserAccount(userName);
+        AppUser appUser = this.appUserRepository.findByUserName(userName);
 
         if (appUser == null) {
             System.out.println("User not found! " + userName);
@@ -36,13 +37,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         System.out.println("Found User: " + appUser);
 
         // [ROLE_USER, ROLE_ADMIN,..]
-        List<String> roleNames = this.appRoleDAO.getRoleNames(appUser.getUserId());
+        List<UserRole> userRoles = this.userRoleRepository.findByAppUser(appUser);
 
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
-        if (roleNames != null) {
-            for (String role : roleNames) {
+        if (userRoles != null) {
+            for (UserRole userRole : userRoles) {
                 // ROLE_USER, ROLE_ADMIN,..
-                GrantedAuthority authority = new SimpleGrantedAuthority(role);
+                GrantedAuthority authority = new SimpleGrantedAuthority(userRole.getAppRole().getRoleName());
                 grantList.add(authority);
             }
         }

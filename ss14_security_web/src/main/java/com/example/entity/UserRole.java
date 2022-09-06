@@ -21,11 +21,11 @@ public class UserRole {
     @Column(name = "Id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "User_Id", nullable = false)
     private AppUser appUser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "Role_Id", nullable = false)
     private AppRole appRole;
 
