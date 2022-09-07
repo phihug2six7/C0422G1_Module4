@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+</head>
+<body>
+<h2>Blog Hôm Nay</h2>
+<div>
+    <p style="color: red" th:if="${msg}">
+        <span th:text="${msg}"></span>
+    </p>
+</div>
+
+<div>
+    <a href="/showCreate">Thêm mới blog</a>
+</div>
+
+<div>
+    <a href="/">Quay về trang chủ</a>
+</div>
+
+<form action="/">
+    <div>
+        <input
+                type="text"
+                class="form-control"
+                aria-describedby="button-addon2"
+                name="keyword"
+                th:value="${keywordVal}"
+        />
+        <button class="btn btn-outline-primary" type="submit" id="button-addon2" data-mdb-ripple-color="dark">
+            Search
+        </button>
+        <div th:object="${blog}">
+            <select name="" id="" th:field="*{category}">
+                <option value="">Select</option>
+                <option th:each="category: ${categoryList}" th:value="${category.cId}" th:text="${category.nameCategory}"></option>
+            </select>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Content</th>
+        <th scope="col">BlogCategory</th>
+        <th scope="col">Update</th>
+        <th scope="col">Detail</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="blog,loop :${fullList}">
+        <td th:text="${loop.count}"></td>
+        <td th:text="${blog.name}"></td>
+        <td th:text="${blog.content}"></td>
+        <td th:text="${blog.category.nameCategory}"></td>
+        <td>
+            <a th:href="@{/showUpdate(id=${blog.id})}">Update</a>
+        </td>
+        <td>
+            <a th:href="@{/detail(id=${blog.id})}">Detail</a>
+        </td>
+        <td>
+            <a th:href="@{/delete(id=${blog.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <a th:href="@{/udu(page=${fullList.number - 1},
+    keyword=${keywordVal})}"
+       th:if="${fullList.hasPrevious()}">
+        Previous
+    </a>
+    <span th:text="${fullList.number+1}"></span>
+    /
+    <span th:text="${fullList.totalPages}"></span>
+    <a th:href="@{/udu/(page=${fullList.number + 1},
+    keyword=${keywordVal})}"
+       th:if="${fullList.hasNext()}">
+        Next
+    </a>
+</div>
+</body>
+<script src="../static/js/bootstrap.min.js"></script>
+</html>
