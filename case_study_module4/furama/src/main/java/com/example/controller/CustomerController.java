@@ -22,41 +22,47 @@ public class CustomerController {
     private ICustomerTypeService iCustomerTypeService;
 
     @GetMapping("/customer/list")
-    public String showList(Model model, @PageableDefault(size = 4) Pageable pageable){
-        model.addAttribute("customerList",iCustomerService.findAll(pageable));
-        model.addAttribute("customerTypeList",iCustomerTypeService.findAll());
+    public String showList(@RequestParam(defaultValue = "") String keyword
+            , @PageableDefault(size = 2) Pageable pageable,
+                           Model model) {
+        model.addAttribute("keyword",keyword);
+        model.addAttribute("customerList", iCustomerService.findAll(keyword, pageable));
+        model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
         return "customer/list";
     }
 
     @GetMapping("/customer/create")
-    public String showCreate(Model model){
-        model.addAttribute("customer",new Customer());
-        model.addAttribute("customerTypeList",iCustomerTypeService.findAll());
+    public String showCreate(Model model) {
+        model.addAttribute("customer", new Customer());
+        model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
         return "customer/create";
     }
 
     @PostMapping("/customer/create")
-    public String create(@ModelAttribute Customer customer,Model model){
-        CustomerType customerType=new CustomerType();
+    public String create(@ModelAttribute Customer customer) {
+        CustomerType customerType = new CustomerType();
         customerType.setId(customer.getCustomerType().getId());
         customer.setCustomerType(customerType);
         iCustomerService.save(customer);
         return "redirect:/customer/list";
     }
+
     @GetMapping("/customer/update")
-    public String showUpdate(@RequestParam int id,Model model){
-        model.addAttribute("customerList",iCustomerService.findById(id));
-        model.addAttribute("customerTypeList",iCustomerTypeService.findAll());
+    public String showUpdate(@RequestParam int id, Model model) {
+        model.addAttribute("customerList", iCustomerService.findById(id));
+        model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
         return "customer/update";
     }
+
     @PostMapping("/customer/update")
-    public String update(@ModelAttribute Customer customer){
+    public String update(@ModelAttribute Customer customer) {
         iCustomerService.save(customer);
         return "redirect:/customer/list";
     }
+
     @GetMapping("/customer/delete")
-    public String delete(@RequestParam Integer id){
-        iCustomerService.remove(id);
+    public String delete(@RequestParam Integer customerIdDelete) {
+        iCustomerService.remove(customerIdDelete);
         return "redirect:/customer/list";
     }
 }

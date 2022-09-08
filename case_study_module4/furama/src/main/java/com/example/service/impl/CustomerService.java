@@ -12,9 +12,10 @@ import org.springframework.stereotype.Service;
 public class CustomerService implements ICustomerService {
     @Autowired
     private ICustomerRepository iCustomerRepository;
+
     @Override
-    public Page<Customer> findAll(Pageable pageable) {
-        return iCustomerRepository.findAll(pageable);
+    public Page<Customer> findAll(String keyword, Pageable pageable) {
+        return iCustomerRepository.findAllByNameContaining(keyword,pageable);
     }
 
     @Override

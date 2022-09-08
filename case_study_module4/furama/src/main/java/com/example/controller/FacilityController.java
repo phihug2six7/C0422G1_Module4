@@ -27,7 +27,7 @@ public class FacilityController {
 
     @GetMapping("/facility/list")
     public String showList(@RequestParam(defaultValue = "") String keyword,
-                           @PageableDefault(size = 4) Pageable pageable,
+                           @PageableDefault(size = 2) Pageable pageable,
                            Model model) {
         model.addAttribute("keyword",keyword);
         model.addAttribute("facilityList", iFacilityService.findAllFacility(keyword, pageable));
