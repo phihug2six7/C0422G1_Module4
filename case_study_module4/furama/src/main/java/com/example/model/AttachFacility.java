@@ -13,15 +13,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table
-public class CustomerType {
+public class AttachFacility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private Double cost;
+    private String unit;
+    private String status;
 
-    @OneToMany(mappedBy = "customerType")
-    private List<Customer> customers;
-
-
+    @OneToMany(mappedBy = "attachFacility")
+    private List<ContractDetail> contractDetails;
 }

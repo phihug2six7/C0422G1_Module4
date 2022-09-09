@@ -6,22 +6,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table
-public class CustomerType {
+public class ContractDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
+    private Integer quantity;
 
-    @OneToMany(mappedBy = "customerType")
-    private List<Customer> customers;
+    @ManyToOne
+    @JoinColumn(name = "contract_id",referencedColumnName = "id")
+    private Contract contract;
 
-
+    @ManyToOne
+    @JoinColumn(name = "attach_facility_id",referencedColumnName = "id")
+    private AttachFacility attachFacility;
 }
