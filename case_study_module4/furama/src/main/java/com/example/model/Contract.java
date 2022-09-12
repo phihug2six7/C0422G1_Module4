@@ -20,7 +20,7 @@ public class Contract {
     private String startDate;
     private String endDate;
     private double deposit;
-    private double totalPrice;
+
 
     @ManyToOne
     @JoinColumn(name = "facility_id",referencedColumnName = "id")

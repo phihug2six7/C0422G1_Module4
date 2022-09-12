@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,11 +25,11 @@ public class Customer {
     private String phoneNumber;
     private String email;
     private String address;
-
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "customerType",referencedColumnName = "id")
     private CustomerType customerType;
-
+    @JsonBackReference
     @OneToMany(mappedBy = "customer")
     private List<Contract> contracts;
 }

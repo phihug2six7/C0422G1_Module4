@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,15 +27,15 @@ public class Facility {
     private double poolArea;
     private int numberOfFloors;
     private String facilityFree;
-
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "facility_type_id",referencedColumnName = "id")
     private FacilityType facilityType;
-
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "rent_type_id",referencedColumnName = "id")
     private RentType rentType;
-
+    @JsonBackReference
     @OneToMany(mappedBy = "facility")
     private List<Contract> contracts;
 
