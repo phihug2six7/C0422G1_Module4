@@ -21,7 +21,6 @@ public class Contract {
     private String endDate;
     private double deposit;
 
-
     @ManyToOne
     @JoinColumn(name = "facility_id",referencedColumnName = "id")
     private Facility facility;

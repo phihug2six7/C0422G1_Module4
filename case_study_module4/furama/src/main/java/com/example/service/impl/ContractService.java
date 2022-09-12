@@ -14,6 +14,11 @@ public class ContractService implements IContractService {
     private IContractRepository iContractRepository;
     @Override
     public Page<Contract> findAll(String keyword, Pageable pageable) {
-        return iContractRepository.findAllByEndDateGreaterThan(keyword,pageable);
+        return iContractRepository.findAllByCustomer_NameContaining(keyword,pageable);
+    }
+
+    @Override
+    public Contract findById(Integer id) {
+        return iContractRepository.findById(id).orElse(new Contract());
     }
 }

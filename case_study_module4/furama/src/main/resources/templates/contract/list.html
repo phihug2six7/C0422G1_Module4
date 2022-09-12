@@ -8,7 +8,7 @@
 <body>
 <div class="row ">
     <div class="col-md-12 d-flex justify-content-center ">
-        <h1>List Customer</h1>
+        <h1>List Contract</h1>
     </div>
 </div>
 
@@ -51,46 +51,70 @@
             <th scope="col">Attached Service</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="contract,loop:${contractList}">
-            <td th:text="${loop.count}"></td>
-            <td th:text="${contract.facility.name}"></td>
-            <td th:text="${contract.customer.name}"></td>
-            <td th:text="${contract.startDate}"></td>
-            <td th:text="${contract.endDate}"></td>
-            <td th:text="${contract.deposit}"></td>
-            <td>Trống</td>
-            <td>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-                    +
-                </button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                    Attached Service List
-                </button>
-            </td>
-        </tr>
+        <tbody id="list" class="table-light">
+<!--        <tr th:each="contract,loop:${contractList}">-->
+<!--            <td th:text="${loop.count}"></td>-->
+<!--            <td th:text="${contract.facility.name}"></td>-->
+<!--            <td th:text="${contract.customer.name}"></td>-->
+<!--            <td th:text="${contract.startDate}"></td>-->
+<!--            <td th:text="${contract.endDate}"></td>-->
+<!--            <td th:text="${contract.deposit}"></td>-->
+<!--            <td></td>-->
+<!--            <td>-->
+<!--                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">-->
+<!--                    +-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">-->
+<!--                    Attached Service List-->
+<!--                </button>-->
+<!--            </td>-->
+<!--        </tr>-->
         </tbody>
     </table>
 </form>
 </div>
 
-<div class="row">
-    <div class="col-md-12 d-flex justify-content-center ">
-        <a th:href="@{/contract/list(page=${contractList.number - 1}
-    ,keyword=${keyword})}"
-           th:if="${contractList.hasPrevious()}">
-            <button style="color: lightskyblue">Pervious</button>
-        </a>
-        <span th:text="${contractList.number+1}"></span>
-        /
-        <span th:text="${contractList.totalPages}"></span>
-        <a th:href="@{/contract/list(page=${contractList.number + 1},
-    keyword=${keyword})}"
-           th:if="${contractList.hasNext()}">
-            <button>Next</button>
-        </a>
-    </div>
-</div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link"
+               id="previousBtn"
+               aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="btn btn-light">
+            <span id="pageNumber"></span>
+            /
+            <span id="totalPage"></span>
+        </li>
+        <li class="page-item">
+            <a class="page-link"
+               id="nextBtn"
+               aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<!--<div class="row">-->
+<!--    <div class="col-md-12 d-flex justify-content-center ">-->
+<!--        <a th:href="@{/contract/list(page=${contractList.number - 1}-->
+<!--    ,keyword=${keyword})}"-->
+<!--           th:if="${contractList.hasPrevious()}">-->
+<!--            <button style="color: lightskyblue">Pervious</button>-->
+<!--        </a>-->
+<!--        <span th:text="${contractList.number+1}"></span>-->
+<!--        /-->
+<!--        <span th:text="${contractList.totalPages}"></span>-->
+<!--        <a th:href="@{/contract/list(page=${contractList.number + 1},-->
+<!--    keyword=${keyword})}"-->
+<!--           th:if="${contractList.hasNext()}">-->
+<!--            <button>Next</button>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</div>-->
 
 
 <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
@@ -182,21 +206,13 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Name</th>
                         <th>Unit</th>
                         <th>Cost</th>
                         <th>Quantity</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Buffet Breakfast</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                    </tr>
+                    <tbody id="attachFacility">
                     </tbody>
                 </table>
             </div>
@@ -263,4 +279,107 @@
 </div>
 </body>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script>
+    let curPage = 0;
+    let lastPage = -1;
+    getContractList(curPage);
+    $("#previousBtn").click(function () {
+        if (curPage == 0) {
+            getContractList(0);
+        } else getContractList(--curPage);
+    });
+    $("#nextBtn").click(function () {
+        if (lastPage === curPage) {
+            getContractList(lastPage);
+        } else
+            getContractList(++curPage);
+    });
+    
+    function getContractList(pageNumber) {
+        $.ajax({
+            type:"Get",
+            url: "http://localhost:8080/contractRest?page=" + pageNumber,
+            success:function (contractPage){
+                lastPage=contractPage.totalPages -1;
+                let contractList=contractPage.content;
+                let htmlStr="";
+                for (let i = 0; i <contractList.length ; i++) {
+                    htmlStr +=`
+                    <tr>
+                    <td>${i+1}</td>
+                    <td>${contractList[i].facility.name}</td>
+                    <td>${contractList[i].customer.name}</td>
+                    <td>${contractList[i].startDate}</td>
+                    <td>${contractList[i].endDate}</td>
+                    <td>${contractList[i].deposit}</td>`
+                    if (contractList[i].contractDetails.length==0){
+                        htmlStr+=`
+                        <td>${contractList[i].facility.cost}</td>`
+                    }else {
+                        let cost=contractList[i].facility.cost;
+                        for (let j = 0; j <contractList[i].contractDetails.length ; j++) {
+                            cost+=contractList[i].contractDetails[j].quantity * contractList[i].contractDetails[j].attachFacility.cost;
+                        }
+                        htmlStr+=`<td>`+cost+`</td>>`
+                    }
+                    htmlStr += `<td>
+                        <button type="button"
+                                class="btn btn-outline-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#addService">
+                           +
+                        </button>
+                        </td>
+                        <td>
+                        <button type="button"
+                                class="btn btn-outline-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal2"
+                                onclick="viewAttachFacility(` + contractList[i].id + `)">
+                            Attached Service List
+                        </button>
+                    </td>`;
+                    htmlStr += `</tr>`;
+                }
+                $('#list').html(htmlStr);
+                $("#pageNumber").text(pageNumber + 1);
+                $("#totalPage").text(contractPage.totalPages);
+            },
+            error: function (errorResult) {
+                }
+        });
+    }
+
+    function viewAttachFacility(contractId) {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/contractRest/detail?id=" + contractId,
+            success: function (contractObj) {
+                let htmlStr = "";
+                if (contractObj.contractDetails.length == 0) {
+                    htmlStr = `<tr>
+                        <td colspan="4">No Attach Facility</td>
+                    </tr>`;
+                } else {
+                    for (let i = 0; i < contractObj.contractDetails.length; i++) {
+                        htmlStr += `
+                    <tr>
+                        <td>${contractObj.contractDetails[i].attachFacility.name}</td>
+                        <td>${contractObj.contractDetails[i].attachFacility.cost}</td>
+                        <td>${contractObj.contractDetails[i].attachFacility.unit}</td>
+                        <td>${contractObj.contractDetails[i].attachFacility.status}</td>
+                    </tr>
+                `;
+                    }
+                }
+                $('#attachFacility').html(htmlStr);
+            },
+            error: function (errorResult) {
+                console.log(errorResult);
+            }
+        });
+    }
+
+</script>
 </html>

@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ public class AttachFacility {
     private Double cost;
     private String unit;
     private String status;
-
+    @JsonBackReference
     @OneToMany(mappedBy = "attachFacility")
     private List<ContractDetail> contractDetails;
 }

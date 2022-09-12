@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IContractRepository extends JpaRepository<Contract,Integer> {
-    Page<Contract> findAllByEndDateGreaterThan(String keyword, Pageable pageable);
+    Page<Contract> findAllByCustomer_NameContaining(String keyword, Pageable pageable);
 }
