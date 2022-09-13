@@ -30,6 +30,6 @@ public class Customer {
     @JoinColumn(name = "customerType",referencedColumnName = "id")
     private CustomerType customerType;
     @JsonBackReference
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     private List<Contract> contracts;
 }

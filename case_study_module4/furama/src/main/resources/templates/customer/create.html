@@ -12,13 +12,15 @@
     <a href="/customer/list" class="text-center">Back to customer list</a>
 </div>
 
-<form action="/customer/create" method="post" th:object="${customer}">
+<form action="/customer/create" method="post" th:object="${customerDto}">
     <div class="container d-flex  justify-content-md-center">
         <div class="row">
             <div class="col-md-12 ">
                 <div class="row">
                     <div class="col-md-6 mb-3 form-check">
-                        <label class="form-label">Name</label>
+                        <label class="form-label">Name
+                            <span style="color: red" th:errors="*{name}"></span>
+                        </label>
                         <input title="Nhập cho đúng nghe cu!" type="text" class="form-control" id="name" name="name"
                                th:field="*{name}">
                     </div>
@@ -40,18 +42,22 @@
 
                     <div class="col-md-6 mb-3 form-check">
                         <label class="form-label">Id Card</label>
+                        <span style="color: red" th:errors="*{idCard}"></span>
                         <input title="Nhập cho đúng nghe cu!" type="text" class="form-control" id="idCard" name="idCard"
                                th:field="*{idCard}">
                     </div>
 
                     <div class="col-md-6 mb-3 form-check">
-                        <label class="form-label">Phone</label>
+                        <label class="form-label">Phone
+                            <span style="color: red" th:errors="*{phoneNumber}"></span>
+                        </label>
                         <input title="Nhập cho đúng nghe cu!" type="number" class="form-control" id="phone" name="phone"
                                th:field="*{phoneNumber}">
                     </div>
 
                     <div class="col-md-6 mb-3 form-check">
                         <label class="form-label">Email</label>
+                        <span style="color: red" th:errors="*{email}"></span>
                         <input title="Nhập cho đúng nghe cu!" type="email" class="form-control" id="email" name="email"
                                th:field="*{email}">
                     </div>
