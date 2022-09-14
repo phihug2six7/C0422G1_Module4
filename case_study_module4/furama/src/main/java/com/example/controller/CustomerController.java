@@ -70,18 +70,21 @@ public class CustomerController {
     public String showUpdate(@RequestParam int id, Model model) {
         model.addAttribute("customerList", iCustomerService.findById(id));
         model.addAttribute("customerTypeList", iCustomerTypeService.findAll());
+
         return "customer/update";
     }
 
     @PostMapping("/customer/update")
-    public String update(@ModelAttribute Customer customer) {
+    public String update(@ModelAttribute Customer customer,RedirectAttributes redirectAttributes) {
         iCustomerService.save(customer);
+        redirectAttributes.addFlashAttribute("msg","Update successfully!");
         return "redirect:/customer/list";
     }
 
     @GetMapping("/customer/delete")
-    public String delete(@RequestParam Integer customerIdDelete) {
+    public String delete(@RequestParam Integer customerIdDelete,RedirectAttributes redirectAttributes) {
         iCustomerService.remove(customerIdDelete);
+        redirectAttributes.addFlashAttribute("msg","Delete successfully!");
         return "redirect:/customer/list";
     }
 }

@@ -6,15 +6,15 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class ContractDto implements Validator {
     private Integer id;
     private String startDate;
     private String endDate;
 
-    @NotBlank(message = "Không nên để trống bạn nhé!")
-    @Min(value = 0,message = "Không nhập chữ và chỉ nhập số dương")
+    @NotNull
+    @Min(value = 1, message = "Không nhập chữ và chỉ nhập số dương")
     private double deposit;
 
     private Facility facility;

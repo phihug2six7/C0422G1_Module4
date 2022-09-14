@@ -19,6 +19,6 @@ public class RentType {
     private int id;
     private String name;
 
-    @OneToMany(mappedBy = "rentType")
+    @OneToMany(mappedBy = "rentType",cascade = CascadeType.ALL)
     private List<Facility> facilities;
 }

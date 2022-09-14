@@ -5,21 +5,20 @@ import com.example.model.RentType;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 public class FacilityDto implements Validator {
     private int id;
 
     @NotBlank(message = "Không nên để trống bạn nhé!")
-    @Pattern(regexp = "^[a-zỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêđâ0-9A-ZĐỲỌÁẦẢẤỜỄÀẠẰỆẾÝỘẬỐŨỨĨÕÚỮỊỖÌỀỂẨỚẶÒÙỒỢÃỤỦÍỸẮẪỰỈỎỪỶỞÓÉỬỴẲẸÈẼỔẴẺỠƠÔƯĂÊÂ ]+$",
+    @Pattern(regexp = "^[A-ZĐ][a-zỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâ]+" +
+            "( [A-ZĐ][a-zỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâ]*)+$",
             message = "Ký tự đầu tiên của mỗi từ phải viết hoa")
     private String name;
 
     private int area;
 
-    @NotBlank(message = "Không nên để trống bạn nhé!")
+    @NotNull
     @Min(value = 0,message = "Không nhập chữ và chỉ nhập số dương")
     private double cost;
 
@@ -28,8 +27,7 @@ public class FacilityDto implements Validator {
     private String descriptionOtherConvenience;
     private double poolArea;
 
-    @NotBlank(message = "Không nên để trống bạn nhé!")
-    @Min(value = 0,message = "Không nhập chữ và chỉ nhập số dương")
+    @PositiveOrZero
     private int numberOfFloors;
 
     private String facilityFree;

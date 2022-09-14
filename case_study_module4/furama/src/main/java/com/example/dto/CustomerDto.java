@@ -7,24 +7,26 @@ import org.springframework.validation.Validator;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
 
 public class CustomerDto implements Validator {
     private Integer id;
 
     @NotBlank(message = "Không nên để trống bạn nhé!")
-    @Pattern(regexp = "^[a-zỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêđâA-ZĐỲỌÁẦẢẤỜỄÀẠẰỆẾÝỘẬỐŨỨĨÕÚỮỊỖÌỀỂẨỚẶÒÙỒỢÃỤỦÍỸẮẪỰỈỎỪỶỞÓÉỬỴẲẸÈẼỔẴẺỠƠÔƯĂÊÂ ]+$",
+    @Pattern(regexp = "^[A-ZĐ][a-zỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâ]+( [A-ZĐ][a-zỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâ]*)+$",
             message = "Tên khách hàng không được chứa số và ký tự đầu tiên phải viết hoa")
     private String name;
 
+    @NotBlank
     private String dateOfBirth;
     private int gender;
 
     @NotBlank(message = "Không nên để trống bạn nhé!")
-    @Pattern(regexp = "^[0-9]{9}|[0-9]{12}$",message = "Nhập 9 số hoặc 12 số")
+    @Pattern(regexp = "^[0-9]{9}|[0-9]{12}$", message = "Nhập 9 số hoặc 12 số")
     private String idCard;
 
     @NotBlank(message = "Không nên để trống bạn nhé!")
-    @Pattern(regexp = "^((090)|(091)|(\\(84\\)\\+90)|(\\(84\\)\\+91))[0-9]{7}$",message = "Nhập 090 hoặc 091 với 7 số," +
+    @Pattern(regexp = "^((090)|(091)|(\\(84\\)\\+90)|(\\(84\\)\\+91))[0-9]{7}$", message = "Nhập 090 hoặc 091 với 7 số," +
             " (84+)90 với (84+)91 với 7 số")
     private String phoneNumber;
 
@@ -131,6 +133,13 @@ public class CustomerDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-
+        CustomerDto customerDto = (CustomerDto) target;
+        if (!customerDto.dateOfBirth.trim().equals("")) {
+            try {
+                LocalDate.parse(customerDto.dateOfBirth);
+            } catch (Exception e) {
+                errors.rejectValue("dateOfBirth", "date.err", "Nhập đúng định dạng");
+            }
+        }
     }
 }

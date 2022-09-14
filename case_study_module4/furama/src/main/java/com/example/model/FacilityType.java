@@ -19,6 +19,6 @@ public class FacilityType {
     private int id;
     private String name;
 
-    @OneToMany(mappedBy = "facilityType")
+    @OneToMany(mappedBy = "facilityType",cascade = CascadeType.ALL)
     private List<Facility> facilities;
 }
